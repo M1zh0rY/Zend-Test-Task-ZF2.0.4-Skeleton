@@ -1,0 +1,85 @@
+Задание 1. Предположим, нам необходимо хранить в БД часть информации какого-либо блога. Конкретно - записи (posts) и авторы (authors).
+В детали вдаваться не стоит, достаточно основных, ключевых полей. Необходимо учесть, что одна запись может писаться несколькими авторами.
+Предложите структуру таблиц и связи, напишите SQL запрос(ы), которые это реализуют.
+
+Задание 2. Даны следующие две таблицы:
+
+--
+-- Структура таблицы `claim`
+--
+
+CREATE TABLE IF NOT EXISTS `claim` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `manager_id` int(11) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `sum` float NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `manager_id` (`manager_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
+
+--
+-- Дамп данных таблицы `claim`
+--
+
+INSERT INTO `claim` (`id`, `manager_id`, `created_at`, `sum`) VALUES
+(1, 1, '2013-07-18 10:23:08', 256.128),
+(2, 3, '2013-07-18 13:29:49', 512.1),
+(3, 4, '2013-07-19 16:29:07', 123),
+(4, 4, '2013-07-18 17:35:53', 321),
+(5, 4, '2013-06-19 15:31:46', 756),
+(6, 1, '2013-06-05 10:47:26', 265),
+(7, 2, '2013-05-31 20:27:38', 354),
+(8, 4, '2013-07-17 15:48:20', 798.12);
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `manager`
+--
+
+CREATE TABLE IF NOT EXISTS `manager` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `first_name` varchar(32) CHARACTER SET latin1 NOT NULL,
+  `last_name` varchar(32) CHARACTER SET latin1 NOT NULL,
+  `email` varchar(32) CHARACTER SET latin1 NOT NULL,
+  `chief_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `chief_id` (`chief_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+
+--
+-- Дамп данных таблицы `manager`
+--
+
+INSERT INTO `manager` (`id`, `first_name`, `last_name`, `email`, `chief_id`) VALUES
+(1, 'Simple', 'Manager', '', 2),
+(2, 'Super', 'Manager', '', NULL),
+(3, 'Third ', 'Manager', '', 2),
+(4, 'Just', 'Manager', '', NULL);
+
+--
+-- Ограничения внешнего ключа таблицы `claim`
+--
+ALTER TABLE `claim`
+  ADD CONSTRAINT `claim_ibfk_1` FOREIGN KEY (`manager_id`) REFERENCES `manager` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Ограничения внешнего ключа таблицы `manager`
+--
+ALTER TABLE `manager`
+  ADD CONSTRAINT `manager_ibfk_1` FOREIGN KEY (`chief_id`) REFERENCES `manager` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+Напишите sql-запрос, выбирающий информацию по каждому менеджеру, включая количество связанных с ним заявок и их общую сумму (в 2 дополнительных поля: claim_count, claim_total_sum).
+Выборка должна быть выполнена одним запросом!
+
+Задание 3. Напишите запрос, который выведет двух менеджеров, у которых количество связанных заявок меньше, чем у остальных.
+При этом, объедините значения first_name и last_name в одно поле full_name.
+
+Задание 4. Напишите запрос, который выведет список менеджеров, количество заявок у которых больше, чем у их руководителя (связь с руководителем по полю chief_id).
+
+Задание 5. Напишите запрос, результатом которого будет "месячный отчет" по заявкам.
+Т.е. в результате, мы должны увидеть таблицу с полями month, claim_count, claim_total_sum. Каждый месяц - одна строка.
+В поле month, должно быть полное название месяца и год (e.g. November 2012). В поле claim_count - количество заявок в этом месяце,
+а claim_total_sum - общая сумма по заявкам.
+
+Задание 6. Выберите топ-менеджеров за июль 2013 (07.2013) по результатам среднего значения суммы заявки.

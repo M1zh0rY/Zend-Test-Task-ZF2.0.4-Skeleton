@@ -1,0 +1,137 @@
+<?php $list_themes = $this->LayoutsHelper()->getThemeListArray();?>
+<?php echo $this->doctype(); ?>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <?=$this->headTitle('Новостной блог')?>
+
+        <?=$this->headMeta()
+            ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+            ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
+        ?>
+		
+        <!-- Scripts -->
+        <?=$this->headScript()
+            ->prependFile($this->basePath('js/bootstrap.min.js'))
+            ->prependFile('//code.jquery.com/ui/1.11.4/jquery-ui.js')
+            ->prependFile('//code.jquery.com/jquery-1.10.2.js')
+            ->prependFile($this->basePath('js/respond.min.js'), 'text/javascript', array('conditional' => 'lt IE 9',))
+            ->prependFile($this->basePath('js/html5shiv.min.js'),   'text/javascript', array('conditional' => 'lt IE 9',))
+            ->prependFile($this->basePath('js/main.js'))
+        ; ?>
+          <!-- Le styles -->
+        <?=$this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'))
+                        ->prependStylesheet($this->basePath('css/style.css'))
+                        ->prependStylesheet($this->basePath('css/bootstrap-theme.min.css'))
+                        ->prependStylesheet($this->basePath('css/news.css'))
+                        ->prependStylesheet($this->basePath('css/bootstrap.min.css'))
+				        ->prependStylesheet($this->basePath('js/jqueryUI/jquery-ui.structure.min.css'))
+						->prependStylesheet($this->basePath('js/jqueryUI/jquery-ui.min.css'))
+						->prependStylesheet($this->basePath('js/jqueryUI/jquery-ui.theme.min.css'))
+        ;?>
+
+    </head>
+    <body>
+    
+    <div class="blog-header">
+    	<h1>Новостной блог <small style="color:rgb(204,204,204);font-size:16px;opacity:0.3;">самые свежие новости у нас!</small></h1>
+    </div>
+    <div class="row">
+    	<div class="col-sm-2 col-sm-offset-1 blog-sidebar">
+	    	<div class="sidebar-module">
+		    	<h4>Архив новостей:</h4>
+		    	<!-- Block -->
+		    	<!-- /Block -->
+		    	<ul class="list-unstyled">
+		    		<li>
+		    			<p class="lead">2016</p>
+		    			<ul class="list-unstyled list_arhive_news">
+		    				<li><a href="#">Февраль <span>(20)</span></a></li>
+		    				<li><a href="#">Март <span>(21)</span></a></li>
+		    				<li><a href="#">Апрель <span>(22)</span></a></li>
+		    				<li><a href="#">Май <span>(24)</span></a></li>
+		    			</ul>
+		    		</li>
+		    		<li>
+		    			<p class="lead">2015</p>
+		    			<ul class="list-unstyled list_arhive_news">
+		    				<li><a href="#">Февраль <span>(20)</span></a></li>
+		    				<li><a href="#">Март <span>(21)</span></a></li>
+		    				<li><a href="#">Апрель <span>(22)</span></a></li>
+		    				<li><a href="#">Май <span>(24)</span></a></li>
+		    			</ul>
+		    		</li>
+		    		<li>
+		    			<p class="lead">2014</p>
+		    			<ul class="list-unstyled list_arhive_news">
+		    				<li><a href="#">Февраль <span>(20)</span></a></li>
+		    				<li><a href="#">Март <span>(21)</span></a></li>
+		    				<li><a href="#">Апрель <span>(22)</span></a></li>
+		    				<li><a href="#">Май <span>(24)</span></a></li>
+		    			</ul>
+		    		</li>
+		    		<li>
+		    			<p class="lead">2013</p>
+		    			<ul class="list-unstyled list_arhive_news">
+		    				<li><a href="#">Февраль <span>(20)</span></a></li>
+		    				<li><a href="#">Март <span>(21)</span></a></li>
+		    				<li><a href="#">Апрель <span>(22)</span></a></li>
+		    				<li><a href="#">Май <span>(24)</span></a></li>
+		    			</ul>
+		    		</li>
+		    	</ul>
+		    </div>
+    	</div>
+    	<div class="col-sm-5 blog-main">
+    		<div><a href="#" class="add-news">Добавить новость</a></div>
+    		<div class="" id="theme-list" role="navbar">
+    			<ul class="nav navbar-nav">
+    			<?php foreach($list_themes as $key=>$theme):?>
+					<li><a href="/theme/"><small><?php echo $key?> (<?php echo count($theme['news'])?>)</small></a></li>
+				<?php endforeach;?>
+				</ul>
+    		</div>
+    		<br />
+    		<hr />
+    		<br />
+    		<div class="content"><?=$this->content?></div>
+    	</div>
+    	<div class="col-sm-3 blog-sidebar">
+	    	<div class="sidebar-module">
+		    	<h4>Последние новости:</h4>
+		    	<ul class="list-unstyled list_arhive_news">
+		    		<!-- last news -->
+		    		<li class="last-news">
+			    		<p>
+			    			
+			    			<span class="list-news-name">
+			    				<h5>
+			    					<span class="name-news"><a href="#">Hэйм ньюс</a></span>
+			    				</h5>
+			    			</span>
+			    			<span class="list-news-date">
+			    				<em>13.02.2016</em>&nbsp;|&nbsp;<a href="#">Тема</a>
+			    			</span>
+			    		</p>
+			    		<p style="padding:3px;float:left;">
+			    			<span>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat...</span>
+			    		</p>
+			    		<p class="list-news-right">
+			    			<a href="#">Подробнее ...</a>
+			    		</p>			
+		    		</li>
+		    		<!-- /last news -->
+		    		
+		    	</ul>
+		    </div>
+    	</div>
+    </div>
+    <div class="message-box" style="display:none"></div>
+    <script type="text/javascript">
+	    $(document).ready(function(e){
+	    	func_click_add_news_dialog();
+	    	//func_get_theme_list_html();
+	    });
+    </script>
+    </body>
+    </html>

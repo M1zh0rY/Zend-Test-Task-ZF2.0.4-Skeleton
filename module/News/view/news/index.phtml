@@ -1,0 +1,19 @@
+<?php
+
+
+?>
+
+<?php if(!is_object($news) && count($news)<=0):?>
+<div class="no-news">Новостей к сожалению нет!</div>
+<?php else:?>
+<div class="">
+	<?php foreach($news as $k=>$n):?>
+	<div class="news-block">
+		<div class="news-block-title"><span class="news-block-date"><?=$n->date?></span><h2><a href="/view/<?=$n->news_id?>"><?=$n->title?></a></h2></div>
+		<div class="news-block-preview"><?=$n->preview?></div>
+		<div class=""><a href="/view/<?=$n->news_id?>">подробнее..</a></div>
+		<hr />
+	</div>
+	<?php endforeach;?>
+</div>
+<?php endif;?>

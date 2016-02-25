@@ -1,0 +1,54 @@
+<div class="ajax-add-form" style="display:block;width: 320px;">
+	<h4>Добавление новости</h4>
+	<form class="form-add-news" role="form">
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="form-group">
+					<label for="SelectTheme">Выбирите тему новости:</label>
+					<select class="form-control input-lg" id="SelectTheme">
+						<option value="false">---</option>
+						<?php foreach($this->themes as $k=>$theme):?>
+						<option value="<?=$theme['theme_id']?>"><?=$theme['theme_title']?></option>
+						<?php endforeach;?>
+					</select>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12">
+				<label for="newsTitle">Заголовок новости:</label>
+				<input type="text" id="newsTitle" class="form-control input-lg" />
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12">
+				<label for="textareaText">Ткст новости:</label>
+				<textarea id="textareaText" rows="10" class="form-control input-lg" placeholder="Введите текст новости"></textarea>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12">
+				<button class="btn btn-lg btn-primary btn-block btn-submit" type="button">отправить</button>
+			</div>
+		</div>
+	</form>
+</div>
+<script>
+	$('.btn-submit').click(function(e){
+		var _textarea = $("textarea[id='textareaText']").val();
+		var _title = $("input[id='newsTitle']").val();
+		var _theme_id = $("select[id='SelectTheme']").val()
+		
+		var data = {
+				text:_textarea,
+				title:_title,
+				theme: _theme_id,
+				addnews:true
+			};
+		$.post("/add?", data)
+			.done(function( datas ) {
+		    	//alert( "Data Loaded: " + datas );
+		  	});
+//		var data = {'email':$('input:type=email').val(),'text':
+	});
+</script>

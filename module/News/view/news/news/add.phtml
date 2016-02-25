@@ -1,0 +1,102 @@
+<div class="ajax-add-form" style="display:block;width: 320px;">
+	<h4>Добавление новости</h4>
+	<form class="form-add-news" role="form">
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="form-group">
+					<label for="SelectTheme">Выбирите тему новости:<span style="color:red"><strong>*</strong></span></label>
+					<select class="form-control input-lg" id="SelectTheme">
+						<option value="false">---</option>
+						<?php foreach($this->themes as $k=>$theme):?>
+						<option value="<?=$theme->theme_id?>"><?=$theme->theme_title?></option>
+						<?php endforeach;?>
+					</select>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12">
+				<label for="newsTitle">Заголовок новости: <span style="color:red"><strong>*</strong></span></label>
+				<input type="text" id="newsTitle" class="form-control input-lg" />
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12">
+				<label for="textareaText">Текст новости:<span style="color:red"><strong>*</strong></span></label>
+				<textarea id="textareaText" rows="10" class="form-control input-lg" placeholder="введите текст новости"></textarea>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12">
+				<button class="btn btn-lg btn-primary btn-block btn-submit" type="button">отправить</button>
+			</div>
+		</div>
+	</form>
+</div>
+<script>
+$(document).ready(function(d) {
+	// Valid form element
+	var vst = $('#SelectTheme').change(function(c) {
+		var _vst = $(this);
+		return _vst;
+	});
+	var vnt = $('#newsTitle').change(function(c){
+		var _vnt = $(this);
+		return _vnt;
+	});
+	var vtt = $('#textareaText').change(function(c){
+		var _vtt = $(this);
+		return _vtt;
+		
+	});
+	// click button to send form
+	$('.btn-submit').click(function(e){
+		var error = false;
+		
+		if(vst.val()=="" || vst.val()=='false')
+		{
+			vst.css({'border-color':'red'});
+			error = true;
+		} else {
+			vst.css({'border-color':'green'});
+		}
+		
+		if(vnt.val()=="" || vnt.val()=='false')
+		{
+			vnt.css({'border-color':'red'});
+			error = true;
+		} else {
+			vnt.css({'border-color':'green'});
+		}
+		
+		if(vtt.val()=="" || vtt.val()=='false')
+		{
+			vtt.css({'border-color':'red'});
+			error = true;
+		} else {
+			vtt.css({'border-color':'green'});
+		}
+
+		if (error == false) {
+			var _textarea = vtt.val();
+			var _title = vnt.val();
+			var _theme_id = vst.val();
+			
+			var data = {
+					text:_textarea,
+					title:_title,
+					theme: _theme_id,
+					addnews:true
+				};
+			$.post("/add?", data)
+				.done(function( datas ) {
+			    	//alert( "Data Loaded: " + datas )
+			    	jQuery(".ajax-add-form").html(datas);
+			  	});
+		} else {
+			alert('Вы не заполнили нужные поля. Заполните и повторите отправку');
+		}
+	});
+	
+})
+</script>
